@@ -599,6 +599,8 @@ if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android")
     add_subdirectory( examples EXCLUDE_FROM_ALL )
     add_custom_target( hello_world )
     add_subdirectory( examples/hello_world  EXCLUDE_FROM_ALL )
+    add_custom_target( basic )
+    add_subdirectory( examples/basic  EXCLUDE_FROM_ALL )
 endif()
 
 ##############################################################################
