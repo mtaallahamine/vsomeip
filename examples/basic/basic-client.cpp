@@ -2,7 +2,6 @@
 #include <iostream>
 #include <sstream>
 
-#include <condition_variable>
 #include <thread>
 
 #include <vsomeip/vsomeip.hpp>
@@ -13,13 +12,12 @@
 #define SAMPLE_METHOD_ID 0x0421
 
 std::shared_ptr<vsomeip::application> app;
-std::mutex mutex;
-std::condition_variable condition;
+bool available =false;
+bool waitResponse = false;
 
 void run() {
-  std::unique_lock<std::mutex> its_lock(mutex);
-  condition.wait(its_lock);
-
+    if(available && !waitResponse)
+  {
   std::shared_ptr< vsomeip::message > request;
   request = vsomeip::runtime::get()->create_request();
   request->set_service(SAMPLE_SERVICE_ID);
@@ -34,6 +32,9 @@ void run() {
   its_payload->set_data(its_payload_data);
   request->set_payload(its_payload);
   app->send(request);
+  waitResponse =true;
+  }
+  
 }
 void on_message(const std::shared_ptr<vsomeip::message> &_response) {
 
@@ -51,12 +52,13 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_client() << "/"
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
       << ss.str() << std::endl;
+      waitResponse = false;
 }
 void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
     std::cout << "Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
             << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
-            condition.notify_one();
+            available = true;
 }
 
 int main(){
