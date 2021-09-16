@@ -12,12 +12,9 @@
 #define SAMPLE_METHOD_ID 0x0421
 
 std::shared_ptr<vsomeip::application> app;
-bool available =false;
-bool waitResponse = false;
 
 void run() {
-    if(available && !waitResponse)
-  {
+  std::cout << " send message";
   std::shared_ptr< vsomeip::message > request;
   request = vsomeip::runtime::get()->create_request();
   request->set_service(SAMPLE_SERVICE_ID);
@@ -31,11 +28,9 @@ void run() {
   }
   its_payload->set_data(its_payload_data);
   request->set_payload(its_payload);
-  app->send(request);
-  waitResponse =true;
-  }
-  
+  app->send(request); 
 }
+
 void on_message(const std::shared_ptr<vsomeip::message> &_response) {
 
   std::shared_ptr<vsomeip::payload> its_payload = _response->get_payload();
@@ -52,13 +47,12 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_client() << "/"
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
       << ss.str() << std::endl;
-      waitResponse = false;
 }
 void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
     std::cout << "Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
             << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
-            available = true;
+run();
 }
 
 int main(){
@@ -68,7 +62,5 @@ int main(){
     app->register_availability_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
     app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
-    std::thread sender(run);
     app->start();
-
 }
