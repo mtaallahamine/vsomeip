@@ -10,7 +10,7 @@
     "applications" : 
     [
         {
-            "name" : "basic-service",
+            "name" : "notify-service",
             "id" : "0x1277"
         }
     ],
@@ -22,7 +22,7 @@
             "unreliable" : "30509"
         }
     ],
-    "routing" : "basic-service",
+    "routing" : "notify-service",
     "service-discovery" :
     {
         "enable" : "true",
