@@ -15,8 +15,6 @@ std::shared_ptr<vsomeip::application> app;
 
 void run() {
   std::cout << "CLIENT: send Request message" << std::endl;
-  std::cout << "CLIENT: send request message" << std::endl;
->>>>>>> a497d5021e6d4c49263ab315068b5ef77eeffd16
   std::shared_ptr< vsomeip::message > request;
   request = vsomeip::runtime::get()->create_request();
   request->set_service(SAMPLE_SERVICE_ID);
