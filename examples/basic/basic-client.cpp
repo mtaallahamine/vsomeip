@@ -13,7 +13,7 @@
 
 std::shared_ptr<vsomeip::application> app;
 
-void run() {
+void send_message()) {
   std::cout << "CLIENT: send Request message" << std::endl;
   std::shared_ptr< vsomeip::message > request;
   request = vsomeip::runtime::get()->create_request();
@@ -52,7 +52,10 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
     std::cout << "Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
             << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
-run();
+    if (_is_available)
+    {
+        send_message();
+    }        
 }
 
 int main(){
