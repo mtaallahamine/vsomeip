@@ -1186,12 +1186,22 @@ void configuration_impl::load_service_discovery(
             std::string its_value(i->second.data());
             std::stringstream its_converter;
             if (its_key == "enable") {
+                 VSOMEIP_WARNING << "*********** Service Discovery :: found enable mode *************** " << _element.name_;
                 if (!is_overlay_ && is_configured_[ET_SERVICE_DISCOVERY_ENABLE]) {
                     VSOMEIP_WARNING << "Multiple definitions for service_discovery.enabled."
                             " Ignoring definition from " << _element.name_;
                 } else {
-                    is_sd_enabled_ = (its_value == "true");
-                    is_configured_[ET_SERVICE_DISCOVERY_ENABLE] = true;
+                    VSOMEIP_WARNING << "*********** Service Discovery :: check its_value *************** " << _element.name_;
+                    if(its_value == "true")
+                    {
+                      VSOMEIP_WARNING << "*********** its_value = TRUE *************** " << _element.name_;
+                      is_sd_enabled_ = true;
+                      is_configured_[ET_SERVICE_DISCOVERY_ENABLE] = true;
+                    }else{
+                       VSOMEIP_WARNING << "*********** its_value = FALSE *************** " << _element.name_;
+                       is_sd_enabled_ = false;
+                       is_configured_[ET_SERVICE_DISCOVERY_ENABLE] = false;
+                    }
                 }
             } else if (its_key == "multicast") {
                 if (!is_overlay_ && is_configured_[ET_SERVICE_DISCOVERY_MULTICAST]) {

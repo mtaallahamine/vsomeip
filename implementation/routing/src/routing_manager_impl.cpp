@@ -122,7 +122,7 @@ void routing_manager_impl::init() {
     stub_ = std::make_shared<routing_manager_stub>(this, configuration_);
     stub_->init();
 
-    if (!configuration_->is_sd_enabled()) {
+    if (configuration_->is_sd_enabled()) {
         VSOMEIP_INFO<< "Service Discovery enabled. Trying to load module.";
         auto its_plugin = plugin_manager::get()->get_plugin(
                 plugin_type_e::SD_RUNTIME_PLUGIN, VSOMEIP_SD_LIBRARY);
@@ -134,8 +134,6 @@ void routing_manager_impl::init() {
             VSOMEIP_ERROR << "Service Discovery module could not be loaded!";
             std::exit(EXIT_FAILURE);
         }
-    } else {
-        VSOMEIP_INFO<< "Service Discovery disabled. Try agin !!!!!";
     }
 
 #ifndef ANDROID
