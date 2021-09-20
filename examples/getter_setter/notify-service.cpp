@@ -20,6 +20,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request) {
     // Get payload
     std::stringstream ss;
     for (vsomeip::length_t i=0; i<l; i++) {
+        
        ss << std::setw(2) << std::setfill('0') << std::hex
           << (int)*(its_payload->get_data()+i) << " ";
     }
