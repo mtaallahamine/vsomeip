@@ -1,17 +1,21 @@
 {
-    "unicast" : "172.17.0.4",
+    "unicast" : "172.17.0.3",
     "logging" :
-    { 
+    {
         "level" : "debug",
         "console" : "true",
         "file" : { "enable" : "false", "path" : "/tmp/vsomeip.log" },
         "dlt" : "false"
     },
-    "applications" : 
+    "applications" :
     [
         {
             "name" : "basic-service",
             "id" : "0x1277"
+        },
+        {
+            "name" : "basic-client",
+            "id" : "0x1344"
         }
     ],
     "services" :
@@ -25,7 +29,7 @@
     "routing" : "basic-service",
     "service-discovery" :
     {
-        "enable" : "true",
+        "enable" : "false",
         "multicast" : "224.244.224.245",
         "port" : "30490",
         "protocol" : "udp",
