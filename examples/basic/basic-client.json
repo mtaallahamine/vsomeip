@@ -1,27 +1,33 @@
 {
-    "unicast" : "172.17.0.3",
+    "unicast" : "172.17.0.2",
     "logging" :
-    { 
+    {
         "level" : "debug",
         "console" : "true",
         "file" : { "enable" : "false", "path" : "/tmp/vsomeip.log" },
         "dlt" : "false"
     },
-    "applications" : 
+    "applications" :
     [
-        {    
+        {
+            "name" : "basic-service",
+            "id" : "0x1277"
+        },
+        {
             "name" : "basic-client",
             "id" : "0x1344"
         }
     ],
-    "services" : 
-    [
-        {    
-            "service" : "0x1234",
-            "instance" : "0x5678",
-            "unicast" : "172.17.0.2"
-        }
-    ],
+     "services":
+     [
+         {
+             "service" : "0x1234",
+             "instance" : "0x5678",
+             "unicast" : "172.17.0.3",
+             "unreliable" : "30509"
+
+         }
+     ],
     "routing" : "basic-client",
     "service-discovery" :
     {
@@ -36,7 +42,5 @@
         "ttl" : "3",
         "cyclic_offer_delay" : "2000",
         "request_response_delay" : "1500"
-
-        
     }
 }
