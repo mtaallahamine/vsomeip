@@ -14,10 +14,18 @@
             "id" : "0x1344"
         }
     ],
+    "services" : 
+    [
+        {    
+            "service" : "0x1234",
+            "instance" : "0x5678",
+            "unicast" : "172.17.0.2"
+        }
+    ],
     "routing" : "basic-client",
     "service-discovery" :
     {
-        "enable" : "true",
+        "enable" : "false",
         "multicast" : "224.244.224.245",
         "port" : "30490",
         "protocol" : "udp",
@@ -28,5 +36,7 @@
         "ttl" : "3",
         "cyclic_offer_delay" : "2000",
         "request_response_delay" : "1500"
+
+        
     }
 }

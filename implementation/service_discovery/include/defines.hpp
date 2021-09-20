@@ -33,7 +33,7 @@
 #define VSOMEIP_SD_CLIENT                        0x0
 
 
-#define VSOMEIP_SD_DEFAULT_ENABLED                  true
+#define VSOMEIP_SD_DEFAULT_ENABLED                  false
 #define VSOMEIP_SD_DEFAULT_PROTOCOL                 "udp"
 #define VSOMEIP_SD_DEFAULT_MULTICAST                "224.224.224.0"
 #define VSOMEIP_SD_DEFAULT_PORT                     30490
