@@ -49,7 +49,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
             << (int) its_payload->get_data()[i] << " ";
     std::cout << its_message.str() << std::endl;
 
-    if (_response->get_client() == 0) {
+   /* if (_response->get_client() == 0) {
         std::cout << "*************Client :: on_message check getClient response *************" << std::endl;
             if ((its_payload->get_length() % 5) == 0) {
                 std::shared_ptr<vsomeip::message> its_get
@@ -80,7 +80,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
                 std::cout << "*************Client :: on_message send 2 *************" << std::endl;
                 app->send(its_set);
             }
-        }
+        }*/
 
 }
 void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
@@ -99,6 +99,6 @@ int main(){
     app->init();
     app->register_availability_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
-    app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
+    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
     app->start();
 }
