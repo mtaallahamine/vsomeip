@@ -13,21 +13,26 @@
 std::shared_ptr<vsomeip::application> app;
 
 void on_message(const std::shared_ptr<vsomeip::message> &_request) {
-
-    std::shared_ptr<vsomeip::payload> its_payload = _request->get_payload();
-    vsomeip::length_t l = its_payload->get_length();
-
     // Get payload
-    std::stringstream ss;
-    for (vsomeip::length_t i=0; i<l; i++) {
-       ss << std::setw(2) << std::setfill('0') << std::hex
-          << (int)*(its_payload->get_data()+i) << " ";
-    }
-
-    std::cout << "SERVICE: Received message with Client/Session ["
-        << std::setw(4) << std::setfill('0') << std::hex << _request->get_client() << "/"
-        << std::setw(4) << std::setfill('0') << std::hex << _request->get_session() << "] "
-        << ss.str() << std::endl;
+    std::stringstream its_message;
+    its_message << "SERVICE: received a notification for event ["
+            << std::setw(4) << std::setfill('0') << std::hex
+            << _request->get_service() << "."
+            << std::setw(4) << std::setfill('0') << std::hex
+            << _request->get_instance() << "."
+            << std::setw(4) << std::setfill('0') << std::hex
+            << _request->get_method() << "] to Client/Session ["
+            << std::setw(4) << std::setfill('0') << std::hex
+            << _request->get_client() << "/"
+            << std::setw(4) << std::setfill('0') << std::hex
+            << _request->get_session()
+            << "] = ";
+    std::shared_ptr<vsomeip::payload> its_payload = _request->get_payload();
+    its_message << "(" << std::dec << its_payload->get_length() << ") ";
+    for (uint32_t i = 0; i < its_payload->get_length(); ++i)
+        its_message << std::hex << std::setw(2) << std::setfill('0')
+            << (int) its_payload->get_data()[i] << " ";
+    std::cout << its_message.str() << std::endl;
 
     // Create response
     std::shared_ptr<vsomeip::message> its_response = vsomeip::runtime::get()->create_response(_request);

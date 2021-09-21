@@ -28,7 +28,6 @@ void subscribe_event() {
 }
 
 void on_message(const std::shared_ptr<vsomeip::message> &_response) {
-
     std::stringstream its_message;
     its_message << "CLIENT: received a notification for event ["
             << std::setw(4) << std::setfill('0') << std::hex
