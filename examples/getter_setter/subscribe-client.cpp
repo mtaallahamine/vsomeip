@@ -55,10 +55,11 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
     std::cout << "Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
             << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
-    if (_is_available)
+    subscribe_event();
+ /*   if (_is_available)
     {
         subscribe_event();
-    } 
+    } */
 }
 
 int main(){
