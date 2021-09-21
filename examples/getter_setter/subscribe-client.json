@@ -14,7 +14,7 @@
             "id" : "0x1344"
         }
     ],
-    "routing" : "subcribe-client",
+    "routing" : "subscribe-client",
     "service-discovery" :
     {
         "enable" : "true",
