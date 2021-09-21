@@ -10,15 +10,15 @@
     "applications" : 
     [
         {
-            "name" : "basic-service",
+            "name" : "subscribe-client",
             "id" : "0x1277"
         },
         {    
-            "name" : "basic-client",
+            "name" : "subscribe-client",
             "id" : "0x1344"
         }
     ],
-    "routing" : "basic-client",
+    "routing" : "subscribe-client",
     "service-discovery" :
     {
         "enable" : "true",
