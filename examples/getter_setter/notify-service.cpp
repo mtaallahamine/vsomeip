@@ -39,8 +39,8 @@ std::shared_ptr<vsomeip::payload> payload_;
 
 int main(){
 const vsomeip::byte_t its_data[] = { 0x10 };
-std::shared_ptr<vsomeip::payload> payload_data = vsomeip::runtime::get()->create_payload();
-payload_data->set_data(its_data, sizeof(its_data));
+payload_ = vsomeip::runtime::get()->create_payload();
+payload_->set_data(its_data, sizeof(its_data));
 
 
 app = vsomeip::runtime::get()->create_application("notify-service");
@@ -50,7 +50,7 @@ app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METH
 std::set<vsomeip::eventgroup_t> its_groups;
 its_groups.insert(SAMPLE_EVENTGROUP_ID);
 app->offer_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
-app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload_data);
+app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload_);
 app->start();
 
 }
