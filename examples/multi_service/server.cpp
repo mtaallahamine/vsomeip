@@ -4,18 +4,18 @@
 
 #include <vsomeip/vsomeip.hpp>
 
-#define SAMPLE_SERVICE_ID 0x1234
-#define SAMPLE_INSTANCE_ID 0x5678
+#define FIRST_SAMPLE_SERVICE_ID 0x1234
+#define FIRST_SAMPLE_INSTANCE_ID 0x5678
 #define SAMPLE_EVENTGROUP_ID 0x4465
-#define SAMPLE_EVENT_ID 0x8778
+#define FIRST_SAMPLE_EVENT_ID 0x8778
 
 #define SAMPLE_METHOD_ID  0x1421
 
 #define SECOND_SAMPLE_EVENT_ID 0x8777
 #define THIRD_SAMPLE_EVENT_ID 0x8776
 
-#define OTHER_SAMPLE_SERVICE_ID 0x0248
-#define OTHER_SAMPLE_INSTANCE_ID 0x5422
+#define SECOND_SAMPLE_SERVICE_ID 0x0248
+#define SECOND_SAMPLE_INSTANCE_ID 0x5422
 
 #define THIRD_SAMPLE_SERVICE_ID 0x0233
 #define THIRD_SAMPLE_INSTANCE_ID 0x5366
@@ -66,13 +66,13 @@ app->init();
 std::set<vsomeip::eventgroup_t> its_groups;
 its_groups.insert(SAMPLE_EVENTGROUP_ID);
 //offer first service : offer event 1
-app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
-app->offer_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
-app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload_notif1);
+app->offer_service(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID);
+app->offer_event(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, FIRST_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
+app->notify(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, FIRST_SAMPLE_EVENT_ID, payload_notif1);
 //offer second service : offer event 2
-app->offer_service(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID);
-app->offer_event(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
-app->notify(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, payload_notif2);
+app->offer_service(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID);
+app->offer_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
+app->notify(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, payload_notif2);
 //offer third service : offer request service
 app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
 app->offer_service(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID);
