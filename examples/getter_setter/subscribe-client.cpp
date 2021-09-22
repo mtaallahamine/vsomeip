@@ -51,7 +51,6 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
     {
       subscribe_event();
     } 
-
 }
 int main(){
     app = vsomeip::runtime::get()->create_application("subscribe-client");
