@@ -11,8 +11,14 @@
 #define SAMPLE_EVENTGROUP_ID 0x4465
 #define SAMPLE_EVENT_ID 0x8778
 
+#define SECOND_SAMPLE_EVENT_ID 0x8777
+#define THIRD_SAMPLE_EVENT_ID 0x8776
+
 #define OTHER_SAMPLE_SERVICE_ID 0x0248
 #define OTHER_SAMPLE_INSTANCE_ID 0x5422
+
+#define THIRD_SAMPLE_SERVICE_ID 0x0233
+#define THIRD_SAMPLE_INSTANCE_ID 0x5366
 
 std::shared_ptr<vsomeip::application> app;
 void subscribe_event1() {
@@ -29,8 +35,17 @@ void subscribe_event2() {
   std::shared_ptr< vsomeip::message > request;
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
-  app->request_event(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
+  app->request_event(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
   app->subscribe(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
+
+}
+void subscribe_event3() {
+  std::cout << "CLIENT : Subscribe on event 3  " << std::endl;
+  std::shared_ptr< vsomeip::message > request;
+  std::set<vsomeip::eventgroup_t> its_groups;
+  its_groups.insert(SAMPLE_EVENTGROUP_ID);
+  app->request_event(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, THIRD_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
+  app->subscribe(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
 
 }
 void on_message(const std::shared_ptr<vsomeip::message> &_response) {
@@ -75,6 +90,16 @@ void on_availability_event2(vsomeip::service_t _service, vsomeip::instance_t _in
       subscribe_event2();
     } 
 }
+void on_availability_event3(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
+    std::cout << "Service ["
+            << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
+            << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
+    if (_is_available)
+    {
+      std::cout << "***** third service is available *****" <<std::endl;
+      subscribe_event3();
+    } 
+}
 int main(){
     app = vsomeip::runtime::get()->create_application("client");
     app->init();
@@ -86,6 +111,11 @@ int main(){
     //callback subscription for second service
     app->register_availability_handler(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, on_availability_event2);
     app->request_service(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID);
+    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
+
+    //callback subscription for third service
+    app->register_availability_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, on_availability_event3);
+    app->request_service(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID);
     app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
     app->start();
 }

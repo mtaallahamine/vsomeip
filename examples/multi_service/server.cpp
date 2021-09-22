@@ -9,8 +9,15 @@
 #define SAMPLE_EVENTGROUP_ID 0x4465
 #define SAMPLE_EVENT_ID 0x8778
 
+#define SECOND_SAMPLE_EVENT_ID 0x8777
+#define THIRD_SAMPLE_EVENT_ID 0x8776
+
 #define OTHER_SAMPLE_SERVICE_ID 0x0248
 #define OTHER_SAMPLE_INSTANCE_ID 0x5422
+
+#define THIRD_SAMPLE_SERVICE_ID 0x0233
+#define THIRD_SAMPLE_INSTANCE_ID 0x5366
+
 
 std::shared_ptr<vsomeip::application> app;
 
@@ -27,6 +34,12 @@ std::shared_ptr<vsomeip::payload> payload_notif2;
 payload_notif2 = vsomeip::runtime::get()->create_payload();
 payload_notif2->set_data(its_data2, sizeof(its_data2));
 
+//set third event
+const vsomeip::byte_t its_data3[] = { 0x30 };
+std::shared_ptr<vsomeip::payload> payload_notif3;
+payload_notif3 = vsomeip::runtime::get()->create_payload();
+payload_notif3->set_data(its_data3, sizeof(its_data3));
+
 //create and itialize application
 app = vsomeip::runtime::get()->create_application("server");
 app->init();
@@ -38,8 +51,12 @@ app->offer_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_gro
 app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload_notif1);
 //offer second service
 app->offer_service(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID);
-app->offer_event(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
-app->notify(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload_notif2);
+app->offer_event(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
+app->notify(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, payload_notif2);
+//offer third service
+app->offer_service(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID);
+app->offer_event(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, THIRD_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
+app->notify(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, THIRD_SAMPLE_EVENT_ID, payload_notif3);
 //start application
 app->start();
 }
