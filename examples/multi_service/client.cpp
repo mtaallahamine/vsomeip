@@ -13,14 +13,13 @@
 
 #define SAMPLE_METHOD_ID  0x1421
 
-#define SECOND_SAMPLE_EVENT_ID 0x8777
-#define THIRD_SAMPLE_EVENT_ID 0x8776
-
 #define SECOND_SAMPLE_SERVICE_ID 0x0248
 #define SECOND_SAMPLE_INSTANCE_ID 0x5422
+#define SECOND_SAMPLE_EVENT_ID 0x8777
 
 #define THIRD_SAMPLE_SERVICE_ID 0x0233
 #define THIRD_SAMPLE_INSTANCE_ID 0x5366
+
 
 std::shared_ptr<vsomeip::application> app;
 void send_message() {
@@ -132,7 +131,7 @@ int main(){
     app->register_availability_handler(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID);
     app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_event_message);
-    //callback subscription for third service : request service
+    //callback for third service : request service
     app->register_availability_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID);
     app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_response_message);
