@@ -59,7 +59,7 @@ void on_response_message(const std::shared_ptr<vsomeip::message> &_response) {
       << ss.str() << std::endl;
 }
 void subscribe_event1() {
-  std::cout << "CLIENT : Subscribe on event 1 " << std::endl;
+  std::cout << "CLIENT : Subscribe on event[1] " << std::endl;
   std::shared_ptr< vsomeip::message > request;
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
@@ -68,7 +68,7 @@ void subscribe_event1() {
 
 }
 void subscribe_event2() {
-  std::cout << "CLIENT : Subscribe on event 2  " << std::endl;
+  std::cout << "CLIENT : Subscribe on event[2] " << std::endl;
   std::shared_ptr< vsomeip::message > request;
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
@@ -105,7 +105,7 @@ void on_availability_event_service_1(vsomeip::service_t _service, vsomeip::insta
             << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
     if (_is_available)
     {
-            std::cout << "***** first service is available *****" <<std::endl;
+            std::cout << "***** service event[1]  is available *****" <<std::endl;
       subscribe_event1();
     } 
 }
@@ -115,7 +115,7 @@ void on_availability_event_service_2(vsomeip::service_t _service, vsomeip::insta
             << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
     if (_is_available)
     {
-      std::cout << "***** second service is available *****" <<std::endl;
+      std::cout << "***** service event[2]  is available *****" <<std::endl;
       subscribe_event2();
     } 
 }
@@ -125,6 +125,7 @@ void on_availability_request_service(vsomeip::service_t _service, vsomeip::insta
             << "] is " << (_is_available ? "available." : "NOT available.")  << std::endl;
     if (_is_available)
     {
+      std::cout << "***** service request is available *****" <<std::endl;
         send_message();
     }        
 }
