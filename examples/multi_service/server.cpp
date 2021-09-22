@@ -30,16 +30,14 @@ payload_notif2->set_data(its_data2, sizeof(its_data2));
 //create and itialize application
 app = vsomeip::runtime::get()->create_application("server");
 app->init();
-//offer first service 
-app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
 std::set<vsomeip::eventgroup_t> its_groups;
 its_groups.insert(SAMPLE_EVENTGROUP_ID);
+//offer first service 
+app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
 app->offer_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
 app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload_notif1);
 //offer second service
 app->offer_service(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID);
-std::set<vsomeip::eventgroup_t> its_groups;
-its_groups.insert(SAMPLE_EVENTGROUP_ID);
 app->offer_event(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
 app->notify(OTHER_SAMPLE_SERVICE_ID, OTHER_SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload_notif2);
 //start application
