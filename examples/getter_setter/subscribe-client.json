@@ -14,16 +14,6 @@
             "id" : "0x1344"
         }
     ],
-    "services":
-    [
-        {
-            "service" : "0x1234",
-            "instance" : "0x5678",
-            "unicast" : "172.17.0.2",
-            "unreliable" : "30509"
-
-        }
-    ],
     "routing" : "subscribe-client",
     "service-discovery" :
     {
