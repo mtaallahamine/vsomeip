@@ -25,7 +25,7 @@
     "routing" : "notify-service",
     "service-discovery" :
     {
-        "enable" : "false",
+        "enable" : "true",
         "multicast" : "224.244.224.245",
         "port" : "30490",
         "protocol" : "udp",
