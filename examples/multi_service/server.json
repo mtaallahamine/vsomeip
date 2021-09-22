@@ -25,6 +25,11 @@
             "service" : "0x0248",
             "instance" : "0x5422",
             "unreliable" : "30509"
+        },
+        {
+            "service" : "0x0233",
+            "instance" : "0x5366",
+            "unreliable" : "30509"
         }
     ],
     "routing" : "server",
