@@ -65,17 +65,22 @@ app = vsomeip::runtime::get()->create_application("server");
 app->init();
 std::set<vsomeip::eventgroup_t> its_groups;
 its_groups.insert(SAMPLE_EVENTGROUP_ID);
+
 //offer first service : offer event 1
 app->offer_service(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID);
 app->offer_event(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, FIRST_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
-app->notify(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, FIRST_SAMPLE_EVENT_ID, payload_notif1);
+
 //offer second service : offer event 2
 app->offer_service(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID);
 app->offer_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
-app->notify(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, payload_notif2);
+
 //offer third service : offer request service
 app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
 app->offer_service(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID);
-//start application
+
+//trigger notification event
+app->notify(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, FIRST_SAMPLE_EVENT_ID, payload_notif1);
+app->notify(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, payload_notif2);
+//start appliacation
 app->start();
 }
