@@ -16,7 +16,7 @@ const vsomeip::byte_t its_data[] = { 0x10 };
 std::shared_ptr<vsomeip::payload> payload_notif;
 payload_notif = vsomeip::runtime::get()->create_payload();
 payload_notif->set_data(its_data, sizeof(its_data));
-app = vsomeip::runtime::get()->create_application("notify-multi-service");
+app = vsomeip::runtime::get()->create_application("server");
 app->init();
 app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
 std::set<vsomeip::eventgroup_t> its_groups;
