@@ -11,11 +11,25 @@
 #define SAMPLE_METHOD_ID 0x0421
 #define SAMPLE_EVENTGROUP_ID 0x4465
 #define SAMPLE_EVENT_ID 0x8778
-//#define SAMPLE_GET_METHOD_ID    0x0001
-//#define SAMPLE_SET_METHOD_ID    0x0002
 
 std::shared_ptr<vsomeip::application> app;
+void send_message() {
+  std::cout << "CLIENT: send Request message" << std::endl;
+  std::shared_ptr< vsomeip::message > request;
+  request = vsomeip::runtime::get()->create_request();
+  request->set_service(SAMPLE_SERVICE_ID);
+  request->set_instance(SAMPLE_INSTANCE_ID);
+  request->set_method(SAMPLE_METHOD_ID);
 
+  std::shared_ptr< vsomeip::payload > its_payload = vsomeip::runtime::get()->create_payload();
+  std::vector< vsomeip::byte_t > its_payload_data;
+  for (vsomeip::byte_t i=0; i<10; i++) {
+      its_payload_data.push_back(i % 256);
+  }
+  its_payload->set_data(its_payload_data);
+  request->set_payload(its_payload);
+  app->send(request); 
+}
 void subscribe_event() {
   std::cout << "CLIENT : Subscribe on event  " << std::endl;
   std::shared_ptr< vsomeip::message > request;
@@ -66,6 +80,6 @@ int main(){
     app->init();
     app->register_availability_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
-    app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
+    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
     app->start();
 }
