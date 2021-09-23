@@ -71,12 +71,18 @@ void subscribe_event2() {
   app->request_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
   app->subscribe(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
 }*/
-void subscribe_event() {
+void subscribe_event(vsomeip::instance_t _event_id) {
   std::cout << "CLIENT : Subscribe on event " << std::endl;
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
-  app->request_event(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_EVENT, its_groups, vsomeip::event_type_e::ET_FIELD);
-  app->subscribe(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, SAMPLE_EVENTGROUP_ID);
+  if(_event_id==FIRST_SAMPLE_EVENT_ID){
+    app->request_event(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
+    app->subscribe(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, SAMPLE_EVENTGROUP_ID);
+  }else if(_event_id==SECOND_SAMPLE_EVENT_ID){
+    app->request_event(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
+    app->subscribe(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, SAMPLE_EVENTGROUP_ID);
+  }
+
 
 }
 //received callback :: notify/subscribe service
@@ -110,10 +116,10 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
     { 
       if(_service==FIRST_SAMPLE_SERVICE_ID && _instance==FIRST_SAMPLE_INSTANCE_ID ){
         std::cout << "***** service event[1]  is available *****" <<std::endl;
-        subscribe_event();
+        subscribe_event(FIRST_SAMPLE_SERVICE_ID);
       }else if(_service==SECOND_SAMPLE_SERVICE_ID && _instance==SECOND_SAMPLE_INSTANCE_ID){
         std::cout << "***** service event[2]  is available *****" <<std::endl;
-        subscribe_event();
+        subscribe_event(SECOND_SAMPLE_EVENT_ID);
       }else if(_service==THIRD_SAMPLE_SERVICE_ID && _instance==THIRD_SAMPLE_INSTANCE_ID){
         std::cout << "***** service request is available *****" <<std::endl;
         send_message();    
