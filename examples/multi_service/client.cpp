@@ -60,14 +60,14 @@ void on_response_message(const std::shared_ptr<vsomeip::message> &_response) {
 void subscribe_event1() {
   std::cout << "CLIENT : Subscribe on event[1] " << std::endl;
   std::set<vsomeip::eventgroup_t> its_groups;
-  its_groups.insert(FIRST_SAMPLE_EVENT_ID);
+  its_groups.insert(SAMPLE_EVENTGROUP_ID);
   app->request_event(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, FIRST_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
   app->subscribe(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, FIRST_SAMPLE_EVENT_ID);
 }
 void subscribe_event2() {
   std::cout << "CLIENT : Subscribe on event[2] " << std::endl;
   std::set<vsomeip::eventgroup_t> its_groups;
-  its_groups.insert(SECOND_SAMPLE_EVENT_ID);
+  its_groups.insert(SAMPLE_EVENTGROUP_ID);
   app->request_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
   app->subscribe(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID);
 }
