@@ -9,7 +9,8 @@
 #define SAMPLE_EVENTGROUP_ID 0x4465
 #define SAMPLE_EVENT_ID 0x8778
 
-#define SAMPLE_METHOD_ID 0x0421
+#define SAMPLE_GET_METHOD_ID 0x0001
+#define SAMPLE_SET_METHOD_ID 0x0002
 
 std::shared_ptr<vsomeip::application> app;
 std::shared_ptr<vsomeip::payload> payload_;
@@ -20,7 +21,7 @@ void on_get(const std::shared_ptr<vsomeip::message> &_message) {
         {
             its_response->set_payload(payload_);
         }
-        app_->send(its_response);
+        app->send(its_response);
     }
     void on_set(const std::shared_ptr<vsomeip::message> &_message) {
     std::cout << "********* CLIENT on_set method *************" <<std::endl;
@@ -31,8 +32,8 @@ void on_get(const std::shared_ptr<vsomeip::message> &_message) {
             its_response->set_payload(payload_);
         }
 
-        app_->send(its_response);
-        app_->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID,
+        app->send(its_response);
+        app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID,
                      SAMPLE_EVENT_ID, payload_);
     }
 int main(){
@@ -42,8 +43,8 @@ payload_notif = vsomeip::runtime::get()->create_payload();
 payload_notif->set_data(its_data, sizeof(its_data));
 app = vsomeip::runtime::get()->create_application("getset-service");
 app->init();
-app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_get);
-app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_set);
+app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_GET_METHOD_ID, on_get);
+app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_SET_METHOD_ID, on_set);
 app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
 std::set<vsomeip::eventgroup_t> its_groups;
 its_groups.insert(SAMPLE_EVENTGROUP_ID);
