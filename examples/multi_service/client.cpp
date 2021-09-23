@@ -150,6 +150,10 @@ int main(){
     //callback for third service : request service
     app->register_availability_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID);
+<<<<<<< HEAD
     app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
+=======
+    app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_response_message);
+>>>>>>> parent of 638e79c... updare register Handler
     app->start();
 }
