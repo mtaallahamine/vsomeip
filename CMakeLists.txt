@@ -605,8 +605,6 @@ if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android")
     add_subdirectory( examples/event_notification  EXCLUDE_FROM_ALL )
     add_custom_target( multi_service )
     add_subdirectory( examples/multi_service  EXCLUDE_FROM_ALL )
-        add_custom_target( getter_setter )
-    add_subdirectory( examples/getter_setter  EXCLUDE_FROM_ALL )
 endif()
 
 ##############################################################################
