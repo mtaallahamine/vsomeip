@@ -72,15 +72,17 @@ void subscribe_event2() {
   app->subscribe(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
 }*/
 void subscribe_event(vsomeip::instance_t _event_id) {
-  std::cout << "CLIENT : Subscribe on event " << std::endl;
+  std::cout << "******** subscription on going... ******" << std::endl;
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
   if(_event_id==FIRST_SAMPLE_EVENT_ID){
-    app->request_event(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
-    app->subscribe(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, SAMPLE_EVENTGROUP_ID);
+    std::cout << "CLIENT : Subscribe on event 1 " << std::endl;
+    app->request_event(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
+    app->subscribe(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
   }else if(_event_id==SECOND_SAMPLE_EVENT_ID){
-    app->request_event(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
-    app->subscribe(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, SAMPLE_EVENTGROUP_ID);
+    std::cout << "CLIENT : Subscribe on event 2 " << std::endl;
+    app->request_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
+    app->subscribe(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
   }
 
 
