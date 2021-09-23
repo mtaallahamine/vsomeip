@@ -140,14 +140,14 @@ int main(){
     //callback subscription for first service : event 1
     app->register_availability_handler(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE);
-    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
+    app->register_message_handler(FIRST_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, vsomeip::ANY_METHOD, on_message);
     //callback subscription for second service : event 2
     app->register_availability_handler(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE);
-    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
+    app->register_message_handler(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, vsomeip::ANY_METHOD, on_message);
     //callback for third service : request service
     app->register_availability_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE);
-    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
+    app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, vsomeip::ANY_METHOD, on_message);
     app->start();
 }
