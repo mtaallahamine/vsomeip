@@ -57,7 +57,7 @@ void on_response_message(const std::shared_ptr<vsomeip::message> &_response) {
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
       << ss.str() << std::endl;
 }
-void subscribe_event1() {
+/*void subscribe_event1() {
   std::cout << "CLIENT : Subscribe on event[1] " << std::endl;
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
@@ -70,15 +70,15 @@ void subscribe_event2() {
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
   app->request_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SECOND_SAMPLE_EVENT_ID, its_groups, vsomeip::event_type_e::ET_FIELD);
   app->subscribe(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
-}
-/*void subscribe_event() {
+}*/
+void subscribe_event() {
   std::cout << "CLIENT : Subscribe on event " << std::endl;
   std::set<vsomeip::eventgroup_t> its_groups;
-  its_groups.insert(vsomeip::ANY_EVENT);
+  its_groups.insert(SAMPLE_EVENTGROUP_ID);
   app->request_event(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_EVENT, its_groups, vsomeip::event_type_e::ET_FIELD);
-  app->subscribe(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_EVENT);
+  app->subscribe(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, SAMPLE_EVENTGROUP_ID);
 
-}*/
+}
 //received callback :: notify/subscribe service
 void on_event_message(const std::shared_ptr<vsomeip::message> &_response) {
     std::stringstream its_message;
@@ -110,10 +110,10 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
     { 
       if(_service==FIRST_SAMPLE_SERVICE_ID && _instance==FIRST_SAMPLE_INSTANCE_ID ){
         std::cout << "***** service event[1]  is available *****" <<std::endl;
-        subscribe_event1();
+        subscribe_event();
       }else if(_service==SECOND_SAMPLE_SERVICE_ID && _instance==SECOND_SAMPLE_INSTANCE_ID){
         std::cout << "***** service event[2]  is available *****" <<std::endl;
-        subscribe_event2();
+        subscribe_event();
       }else if(_service==THIRD_SAMPLE_SERVICE_ID && _instance==THIRD_SAMPLE_INSTANCE_ID){
         std::cout << "***** service request is available *****" <<std::endl;
         send_message();    
