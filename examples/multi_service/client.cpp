@@ -89,7 +89,6 @@ void on_event_message(const std::shared_ptr<vsomeip::message> &_response) {
             << (int) its_payload->get_data()[i] << " ";
     std::cout << its_message.str() << std::endl;
 }
-
 void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
     std::cout << "Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
