@@ -21,6 +21,21 @@
 #define THIRD_SAMPLE_INSTANCE_ID 0x5366
 
 std::shared_ptr<vsomeip::application> app;
+//subscribe on the available event 
+void subscribe_event(vsomeip::instance_t _event_id) {
+  std::cout << "event subscription on going.." << std::endl;
+  std::set<vsomeip::eventgroup_t> its_groups;
+  its_groups.insert(SAMPLE_EVENTGROUP_ID);
+  if(_event_id==FIRST_SAMPLE_EVENT_ID){
+    std::cout << "CLIENT : Subscribe on event 1 " << std::endl;
+    app->request_event(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
+    app->subscribe(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
+  }else if(_event_id==SECOND_SAMPLE_EVENT_ID){
+    std::cout << "CLIENT : Subscribe on event 2 " << std::endl;
+    app->request_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
+    app->subscribe(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
+  }
+}
 void send_message() {
   std::cout << "CLIENT: send Request message" << std::endl;
   std::shared_ptr< vsomeip::message > request;
@@ -52,21 +67,6 @@ void on_response_message(const std::shared_ptr<vsomeip::message> &_response) {
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
       << ss.str() << std::endl;
 }
-//subscribe on the available event 
-void subscribe_event(vsomeip::instance_t _event_id) {
-  std::cout << "******** subscription on going... ******" << std::endl;
-  std::set<vsomeip::eventgroup_t> its_groups;
-  its_groups.insert(SAMPLE_EVENTGROUP_ID);
-  if(_event_id==FIRST_SAMPLE_EVENT_ID){
-    std::cout << "CLIENT : Subscribe on event 1 " << std::endl;
-    app->request_event(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
-    app->subscribe(FIRST_SAMPLE_SERVICE_ID, FIRST_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
-  }else if(_event_id==SECOND_SAMPLE_EVENT_ID){
-    std::cout << "CLIENT : Subscribe on event 2 " << std::endl;
-    app->request_event(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, _event_id, its_groups, vsomeip::event_type_e::ET_FIELD);
-    app->subscribe(SECOND_SAMPLE_SERVICE_ID, SECOND_SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
-  }
-}
 //received callback :: notify/subscribe service
 void on_event_message(const std::shared_ptr<vsomeip::message> &_response) {
     std::stringstream its_message;
@@ -97,13 +97,13 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
     if (_is_available)
     { 
       if(_service==FIRST_SAMPLE_SERVICE_ID && _instance==FIRST_SAMPLE_INSTANCE_ID ){
-        std::cout << "***** service event[1]  is available *****" <<std::endl;
+        std::cout << "service event[1] : is available" <<std::endl;
         subscribe_event(FIRST_SAMPLE_EVENT_ID);
       }else if(_service==SECOND_SAMPLE_SERVICE_ID && _instance==SECOND_SAMPLE_INSTANCE_ID){
-        std::cout << "***** service event[2]  is available *****" <<std::endl;
+        std::cout << "service event[2] : is available" <<std::endl;
         subscribe_event(SECOND_SAMPLE_EVENT_ID);
       }else if(_service==THIRD_SAMPLE_SERVICE_ID && _instance==THIRD_SAMPLE_INSTANCE_ID){
-        std::cout << "***** service request is available *****" <<std::endl;
+        std::cout << "service request : is available" <<std::endl;
         send_message();    
       }
     } 
@@ -122,6 +122,6 @@ int main(){
     //callback for third service : request service
     app->register_availability_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID);
-    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_response_message);
+    app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_response_message);
     app->start();
 }
