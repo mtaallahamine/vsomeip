@@ -6,14 +6,14 @@
 cmake_minimum_required (VERSION 2.8.7)
 
 # Examples
-add_executable(subscribe-client subscribe-client.cpp)
-target_link_libraries(subscribe-client ${VSOMEIP_NAME} ${Boost_LIBRARIES} ${DL_LIBRARY})
+add_executable(getset-client getset-client.cpp)
+target_link_libraries(getset-client ${VSOMEIP_NAME} ${Boost_LIBRARIES} ${DL_LIBRARY})
 
-add_executable(notify-service notify-service.cpp)
-target_link_libraries(notify-service ${VSOMEIP_NAME} ${Boost_LIBRARIES} ${DL_LIBRARY})
+add_executable(getset-service getset-service.cpp)
+target_link_libraries(getset-service ${VSOMEIP_NAME} ${Boost_LIBRARIES} ${DL_LIBRARY})
 
 
 install (
-    TARGETS subscribe-client notify-service
+    TARGETS getset-client getset-service
     RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
 )
