@@ -10,7 +10,7 @@
     "applications" : 
     [
         {
-            "name" : "notify-service",
+            "name" : "getset-service",
             "id" : "0x1277"
         }
     ],
@@ -22,7 +22,7 @@
             "unreliable" : "30509"
         }
     ],
-    "routing" : "notify-service",
+    "routing" : "getset-service",
     "service-discovery" :
     {
         "enable" : "true",

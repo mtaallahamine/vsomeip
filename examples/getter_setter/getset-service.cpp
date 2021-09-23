@@ -40,7 +40,7 @@ const vsomeip::byte_t its_data[] = { 0x10 };
 std::shared_ptr<vsomeip::payload> payload_notif;
 payload_notif = vsomeip::runtime::get()->create_payload();
 payload_notif->set_data(its_data, sizeof(its_data));
-app = vsomeip::runtime::get()->create_application("notify-service");
+app = vsomeip::runtime::get()->create_application("getset-service");
 app->init();
 app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_get);
 app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_set);
