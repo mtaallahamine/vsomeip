@@ -93,7 +93,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
         its_message << std::hex << std::setw(2) << std::setfill('0')
             << (int) its_payload->get_data()[i] << " ";
     std::cout << its_message.str() << std::endl;
-  }else{
+  }else if(_load_service_id==THIRD_SAMPLE_SERVICE_ID && _load_instance_id==THIRD_SAMPLE_INSTANCE_ID){
      std::shared_ptr<vsomeip::payload> its_payload = _response->get_payload();
      vsomeip::length_t l = its_payload->get_length();
     // Get payload
@@ -106,6 +106,8 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_client() << "/"
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
       << ss.str() << std::endl;
+  }else{
+    std::cout << "no service loaded !!!" <<std::endl;
   }
 
 }
@@ -148,6 +150,6 @@ int main(){
     //callback for third service : request service
     app->register_availability_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE);
-    app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, vsomeip::ANY_METHOD, on_message);
+    app->register_message_handler(THIRD_SAMPLE_SERVICE_ID, THIRD_SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
     app->start();
 }
