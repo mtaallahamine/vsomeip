@@ -70,6 +70,7 @@ void send_message() {
 }*/
 //received callback
 void on_message(const std::shared_ptr<vsomeip::message> &_response) {
+   std::cout << "************** on_message callback *************** " <<std::endl;
    if(_response->get_service()==FIRST_SAMPLE_SERVICE_ID || _response->get_service()==SECOND_SAMPLE_SERVICE_ID ){
       std::stringstream its_message;
       its_message << "CLIENT: received a notification for event ["
