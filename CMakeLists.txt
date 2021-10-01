@@ -605,6 +605,10 @@ if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android")
     add_subdirectory( examples/event_notification  EXCLUDE_FROM_ALL )
     add_custom_target( multi_service )
     add_subdirectory( examples/multi_service  EXCLUDE_FROM_ALL )
+    add_custom_target( mbeddr_someip )
+    add_subdirectory( examples/mbeddr_someip  EXCLUDE_FROM_ALL )
+    add_custom_target( mbddr_example )
+    add_subdirectory( examples/mbddr_example  EXCLUDE_FROM_ALL )
 endif()
 
 ##############################################################################
