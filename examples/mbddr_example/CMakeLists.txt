@@ -6,7 +6,7 @@
 cmake_minimum_required (VERSION 2.8.7)
 
 add_library(vsomeip_main INTERFACE)
-target_sources(vsomeip_test INTERFACE
+target_sources(vsomeip_main INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/main.h" "${CMAKE_CURRENT_SOURCE_DIR}/vsomeipClientRequiredWrapper.h" 
     "${CMAKE_CURRENT_SOURCE_DIR}/vsomeipClientWrapper.h" "${CMAKE_CURRENT_SOURCE_DIR}/vsomeipCommonRequiredWrapper.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/vsomeipCommonWrapper.h"
